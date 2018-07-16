@@ -1,0 +1,10 @@
+Format(test/odi/t20)
+type(batting/bowling/fielding/allround)
+Team(for team)
+Opposition(against team)
+home_or_away
+host_country
+ground
+span(start_date and end_date)
+season
+match_result
