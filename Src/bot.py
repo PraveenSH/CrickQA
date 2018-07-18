@@ -1,6 +1,10 @@
 import pandas as pd
+import pickle
+import sys
 
 map_dir = "../Mappings/"
+model_dir = "../ML/Models/"
+type_map = ["batting", "bowling", "fielding"]
 
 def file_to_dict(fl):
     lines = open(fl, 'r').readlines()
@@ -19,12 +23,22 @@ def get_val(input_text, search_type):
             return dict[key]
     return None
 
+def predict_val(input_text, search_type):
+    model_file = model_dir+search_type+"_model.sav"
+    vec_file = model_dir+search_type+".vec"
+
+    clf = pickle.load(open(model_file,'rb'))
+    vectorizer = pickle.load(open(vec_file,'rb'))
+    
+    pred = clf.predict(vectorizer.transform([input_text]))
+    return pred[0]
+
 def fill_template(input_text):
     input_text = input_text.lower()
-    class_val = get_val(input_text, "format")
-    home_or_away = 2#get_val(input_text, "")
+    class_val = predict_val(input_text, "format")
+    home_or_away = None#get_val(input_text, "")
     team = get_val(input_text, "team")
-    type_val = get_val(input_text, "type")
+    type_val = type_map[predict_val(input_text, "type")]
     
     template = ""
     template += "class="+str(class_val)+";"
@@ -39,13 +53,19 @@ def fill_template(input_text):
     return template
 
 base_url = "http://stats.espncricinfo.com/ci/engine/stats/index.html?"
-search_term = fill_template("highest runs in ODI")
+while True:
 
-final_query = base_url+search_term
-print(final_query)
-tables = pd.read_html(final_query)
-table = tables[2]
-#print(table)
+    line = sys.stdin.readline()
+    if not line:
+        break
+    search_term = fill_template(line)
+
+    final_query = base_url+search_term
+    print(final_query)
+
+    #tables = pd.read_html(final_query)
+    #table = tables[2]
+    #print(table)
 
 #result = table[['Player', 'Ave']][table['Mat']>=10]
 #print(result[:4])
