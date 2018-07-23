@@ -8,3 +8,34 @@ ground
 span(start_date and end_date)
 season
 match_result
+
+
+order_by:
+
+	Batting:
+	NO
+	Runs
+	HS
+	Ave
+	Balls Faced
+	SR
+
+	Bowling:
+	Balls
+	Runs
+	Wickets
+	BBI
+	Ave
+	Econ
+	SR
+	4-for
+	5-for
+	
+	Fielding:
+	Dis
+	Ct
+	St
+	Ct Wk
+	Ct Fi
+	MDI
+	DI

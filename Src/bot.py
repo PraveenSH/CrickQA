@@ -5,7 +5,7 @@ import sys
 map_dir = "../Mappings/"
 model_dir = "../ML/Models/"
 type_map = ["batting", "bowling", "fielding"]
-
+batting_map = ["runs","batting_average","high_score", "fifty_plus", "hundreds", "ducks", "notouts"]
 def file_to_dict(fl):
     lines = open(fl, 'r').readlines()
     dict = {}
@@ -35,11 +35,12 @@ def predict_val(input_text, search_type):
 
 def fill_template(input_text):
     input_text = input_text.lower()
-    class_val = predict_val(input_text, "format")
+    class_val = predict_val(input_text, "format")+1
     home_or_away = None#get_val(input_text, "")
     team = get_val(input_text, "team")
-    type_val = type_map[predict_val(input_text, "type")]
-    
+    type_val = type_map[predict_val(input_text, "type")] 
+    orderby_val = batting_map[predict_val(input_text, "batting")]
+
     template = ""
     template += "class="+str(class_val)+";"
     if not(home_or_away == None):
@@ -48,6 +49,8 @@ def fill_template(input_text):
         template += "team="+str(team)+";"
     if not(type_val == None):
         template += "type="+str(type_val)+";"
+    if not(orderby_val == None):
+        template += "orderby="+str(orderby_val)+";"
 
     template += "template=results"
     return template
@@ -63,9 +66,7 @@ while True:
     final_query = base_url+search_term
     print(final_query)
 
-    #tables = pd.read_html(final_query)
-    #table = tables[2]
-    #print(table)
-
-#result = table[['Player', 'Ave']][table['Mat']>=10]
-#print(result[:4])
+    tables = pd.read_html(final_query)
+    table = tables[2]
+    player = table['Player'][0]
+    print(player)
