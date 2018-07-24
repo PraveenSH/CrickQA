@@ -6,6 +6,7 @@ map_dir = "../Mappings/"
 model_dir = "../ML/Models/"
 type_map = ["batting", "bowling", "fielding"]
 batting_map = ["runs","batting_average","high_score", "fifty_plus", "hundreds", "ducks", "notouts"]
+bowling_map = ["concede", "wickets", "bbi", "economy_rate", "four_plus_wickets", "five_wickets", "bowling_average"]
 def file_to_dict(fl):
     lines = open(fl, 'r').readlines()
     dict = {}
@@ -38,8 +39,11 @@ def fill_template(input_text):
     class_val = predict_val(input_text, "format")+1
     home_or_away = None#get_val(input_text, "")
     team = get_val(input_text, "team")
-    type_val = type_map[predict_val(input_text, "type")] 
-    orderby_val = batting_map[predict_val(input_text, "batting")]
+    type_val = type_map[predict_val(input_text, "type")]
+    if type_val == "batting":
+        orderby_val = batting_map[predict_val(input_text, "batting")]
+    if type_val == "bowling":
+        orderby_val = batting_map[predict_val(input_text, "batting")]
 
     template = ""
     template += "class="+str(class_val)+";"

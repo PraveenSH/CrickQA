@@ -21,9 +21,9 @@ def test(inp):
 
     loaded_model = pickle.load(open("Models/"+inp+"_model.sav",'rb'))
     loaded_vec = pickle.load(open("Models/"+inp+".vec",'rb'))
-    X_test = loaded_vec.transform(["most runs in test", "batsman with best batting average","highest individual score in an one day match", "most t20 fifties", "highest no. of hundreds", "scored highest ducks", "top in notouts"])
+    X_test = loaded_vec.transform(["most wickets in test", "bowler with best average", "most t20 five fors", "highest no. of 4 fors", "best bowling performance", "top economic bowler"])
     preds = loaded_model.predict(X_test)
     print(preds)
 
-train("batting")
-test("batting")
+train("bowling")
+test("bowling")
