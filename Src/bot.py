@@ -43,7 +43,7 @@ def fill_template(input_text):
     if type_val == "batting":
         orderby_val = batting_map[predict_val(input_text, "batting")]
     if type_val == "bowling":
-        orderby_val = batting_map[predict_val(input_text, "batting")]
+        orderby_val = bowling_map[predict_val(input_text, "bowling")]
 
     template = ""
     template += "class="+str(class_val)+";"
