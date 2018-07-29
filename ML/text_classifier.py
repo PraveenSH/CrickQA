@@ -25,6 +25,6 @@ def test(inp):
     preds = loaded_model.predict(X_test)
     print(preds)
 
-cls = ["batting", "bowling", "format", "type"]
+cls = ["batting", "bowling", "format", "type", "fielding"]
 for cl in cls:
     train(cl)
